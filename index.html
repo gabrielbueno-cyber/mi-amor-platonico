@@ -1,0 +1,737 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juan & Natalia</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --rose: #c8536a;
+  --rose-light: #f4c6cf;
+  --rose-dark: #8b2d40;
+  --cream: #fdf8f4;
+  --warm: #f7ede5;
+  --text: #2c1a1f;
+  --muted: #9a7a82;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  background:var(--cream);
+  color:var(--text);
+  font-family:'DM Sans', sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+#bg-canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+.wrap{
+  position:relative;
+  z-index:1;
+  max-width:680px;
+  margin:0 auto;
+  padding:0 1.5rem 6rem;
+}
+
+/* HERO */
+
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:4rem 0;
+}
+
+.eyebrow{
+  font-size:11px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:1.5rem;
+}
+
+.hero-title{
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(3.8rem,13vw,7.5rem);
+  font-weight:300;
+  font-style:italic;
+  line-height:1;
+  color:var(--rose-dark);
+}
+
+.hero-amp{
+  color:var(--rose);
+  font-size:0.7em;
+}
+
+.hero-sub{
+  font-family:'Cormorant Garamond', serif;
+  font-size:clamp(1rem,3vw,1.3rem);
+  font-style:italic;
+  color:var(--muted);
+  margin:1.5rem 0 2rem;
+  line-height:1.7;
+}
+
+.date-badge{
+  background:white;
+  border:1px solid var(--rose-light);
+  border-radius:100px;
+  padding:0.5rem 1.4rem;
+  font-size:12px;
+  letter-spacing:2px;
+  color:var(--muted);
+  margin-bottom:2rem;
+}
+
+/* CONTADOR */
+
+.counter{
+  display:flex;
+  gap:0.8rem;
+  flex-wrap:wrap;
+  justify-content:center;
+  margin-bottom:2.5rem;
+}
+
+.c-box{
+  background:white;
+  border:1px solid var(--rose-light);
+  border-radius:16px;
+  padding:1rem 1.3rem;
+  min-width:76px;
+  text-align:center;
+}
+
+.c-num{
+  display:block;
+  font-family:'Cormorant Garamond', serif;
+  font-size:2.5rem;
+  color:var(--rose);
+}
+
+.c-label{
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.btn-magic{
+  background:var(--rose);
+  color:white;
+  border:none;
+  padding:0.85rem 2.2rem;
+  border-radius:100px;
+  cursor:pointer;
+  font-size:13px;
+  transition:0.3s;
+}
+
+.btn-magic:hover{
+  background:var(--rose-dark);
+  transform:translateY(-2px);
+}
+
+/* DIVIDER */
+
+.divider{
+  text-align:center;
+  margin:4rem 0 3rem;
+  position:relative;
+}
+
+.divider::before{
+  content:'';
+  position:absolute;
+  top:50%;
+  left:0;
+  right:0;
+  height:1px;
+  background:var(--rose-light);
+}
+
+.divider span{
+  background:var(--cream);
+  padding:0 1rem;
+  position:relative;
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  color:var(--muted);
+}
+
+/* TIMELINE */
+
+.timeline{
+  position:relative;
+}
+
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:var(--rose-light);
+  transform:translateX(-50%);
+}
+
+.tl-item{
+  display:flex;
+  align-items:flex-start;
+  margin-bottom:2.8rem;
+  position:relative;
+}
+
+.tl-item:nth-child(odd){
+  flex-direction:row;
+}
+
+.tl-item:nth-child(even){
+  flex-direction:row-reverse;
+}
+
+.tl-card{
+  width:calc(50% - 28px);
+  background:white;
+  border:1px solid var(--rose-light);
+  border-radius:20px;
+  padding:1.4rem;
+}
+
+.tl-dot{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  width:14px;
+  height:14px;
+  background:var(--rose);
+  border-radius:50%;
+  top:1.5rem;
+}
+
+.tl-title{
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.2rem;
+  color:var(--rose-dark);
+  margin-bottom:0.5rem;
+}
+
+.tl-text{
+  font-size:0.85rem;
+  line-height:1.6;
+  color:var(--muted);
+}
+
+.tl-emoji{
+  font-size:1.6rem;
+  margin-bottom:0.5rem;
+  display:block;
+}
+
+/* GALERÍA */
+
+.gallery-section{
+  margin:5rem 0;
+}
+
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:1rem;
+}
+
+.gallery-item{
+  background:white;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--rose-light);
+  transition:0.3s;
+}
+
+.gallery-item:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 30px rgba(200,83,106,0.15);
+}
+
+.gallery-item img{
+  width:100%;
+  height:320px;
+  object-fit:cover;
+  display:block;
+}
+
+.gallery-caption{
+  padding:1rem;
+  text-align:center;
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  color:var(--rose-dark);
+}
+
+/* CARTA */
+
+.letter-section{
+  margin:5rem 0;
+}
+
+.letter-box{
+  background:white;
+  border:1px solid var(--rose-light);
+  border-radius:24px;
+  padding:3rem 2.5rem;
+  position:relative;
+}
+
+.letter-text{
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.2rem;
+  line-height:1.9;
+  font-style:italic;
+}
+
+.letter-sign{
+  margin-top:2rem;
+  text-align:right;
+  color:var(--rose);
+  font-style:italic;
+}
+
+/* FOOTER */
+
+.footer-section{
+  text-align:center;
+  padding:4rem 0;
+  border-top:1px solid var(--rose-light);
+  margin-top:4rem;
+}
+
+.footer-quote{
+  font-family:'Cormorant Garamond', serif;
+  font-size:1.5rem;
+  font-style:italic;
+  color:var(--rose-dark);
+}
+
+.footer-names{
+  margin-top:1rem;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+/* HEARTS */
+
+.heart-rain{
+  position:fixed;
+  pointer-events:none;
+  z-index:999;
+  animation:floatUp 3.5s ease-out forwards;
+}
+
+@keyframes floatUp{
+  0%{
+    bottom:-5vh;
+    opacity:1;
+  }
+
+  100%{
+    bottom:110vh;
+    opacity:0;
+    transform:translateX(var(--drift)) rotate(var(--rot));
+  }
+}
+
+@media(max-width:700px){
+
+.timeline::before{
+  left:10px;
+}
+
+.tl-item,
+.tl-item:nth-child(even),
+.tl-item:nth-child(odd){
+  flex-direction:row;
+}
+
+.tl-card{
+  width:100%;
+  margin-left:2rem;
+}
+
+.tl-dot{
+  left:10px;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="wrap">
+
+<!-- HERO -->
+
+<section class="hero">
+
+<p class="eyebrow">✦ cápsula del tiempo ✦</p>
+
+<h1 class="hero-title">
+Juan <span class="hero-amp">&</span> Natalia
+</h1>
+
+<p class="hero-sub">
+Desde el 14 de octubre de 2023,<br>
+Creando juntos la historia más bonita de amor.
+</p>
+
+<div class="date-badge">
+14 · 10 · 2023
+</div>
+
+<div class="counter">
+
+<div class="c-box">
+<span class="c-num" id="c-days">0</span>
+<span class="c-label">Días</span>
+</div>
+
+<div class="c-box">
+<span class="c-num" id="c-hours">0</span>
+<span class="c-label">Horas</span>
+</div>
+
+<div class="c-box">
+<span class="c-num" id="c-mins">0</span>
+<span class="c-label">Min</span>
+</div>
+
+<div class="c-box">
+<span class="c-num" id="c-secs">0</span>
+<span class="c-label">Seg</span>
+</div>
+
+</div>
+
+<button class="btn-magic" onclick="launchHearts()">
+Presioname ✨
+</button>
+
+</section>
+
+<!-- TIMELINE -->
+
+<div class="divider">
+<span>Nuestra historia</span>
+</div>
+
+<section class="timeline">
+
+<div class="tl-item">
+<div class="tl-card">
+<span class="tl-emoji">🌸</span>
+<div class="tl-title">Hora cero (El día que nos conocimos)</div>
+<p class="tl-text">
+Nunca me hubiese imaginado que una persona fuera capaz de cambiar el color de todos los días, tu te has encargado de embellecer mi vida.
+</p>
+</div>
+<div class="tl-dot"></div>
+</div>
+
+<div class="tl-item">
+<div class="tl-card">
+<span class="tl-emoji">💋</span>
+<div class="tl-title">Nuestro primer beso</div>
+<p class="tl-text">
+Tus besitos de esquimal fueron los culpables; ese día fui espectador de posiblemente uno de mis momentos más significativos y especiales, lo llevare guardado conmigo toda la vida .
+</p>
+</div>
+<div class="tl-dot"></div>
+</div>
+
+<div class="tl-item">
+<div class="tl-card">
+<span class="tl-emoji">✈️</span>
+<div class="tl-title">Nuestro primer viaje</div>
+<p class="tl-text">
+Descubrí definitivamente que no es el lugar es la persona por que cualquier lugar es especial si tu estás conmigo.
+</p>
+</div>
+<div class="tl-dot"></div>
+</div>
+
+</section>
+
+<!-- GALERÍA -->
+
+<section class="gallery-section">
+
+<div class="divider">
+<span>Algunos de nuestros más preciados recuerdos </span>
+</div>
+
+<div class="gallery-grid">
+
+<div class="gallery-item">
+<img src="viaje juntos.jpeg" alt="foto1">
+<div class="gallery-caption">
+Nuestro primer viaje (Aunque no fue el primero fue el que más disfrute a tu lado) y recuerda no es el lugar es la persona ✨
+</div>
+</div>
+
+<div class="gallery-item">
+<img src="sonri.jpeg" alt="foto2">
+<div class="gallery-caption">
+Tu sonrisa es mi conexión a tierra (Puede existir caos pero tu los eliminas) 🤍
+</div>
+</div>
+
+<div class="gallery-item">
+<img src="estadio.jpeg" alt="foto3">
+<div class="gallery-caption">
+Un recuerdo perfecto lleno de pasión 🌸
+</div>
+</div>
+
+<div class="gallery-item">
+<img src="lugar.jpeg" alt="foto4">
+<div class="gallery-caption">
+No se si tu pero este es uno de mis lugares favoritos si estas tu ❤️
+</div>
+</div>
+
+<div class="gallery-item">
+<img src="lugar .jpeg" alt="foto5">
+<div class="gallery-caption">
+Momentos contigo ❤️
+</div>
+</div>
+
+<div class="gallery-item">
+<img src="para siempre.jpeg" alt="foto6">
+<div class="gallery-caption">
+Siempre tú ✨
+</div>
+</div>
+
+</div>
+
+</section>
+
+<!-- CARTA -->
+
+<section class="letter-section">
+
+<div class="divider">
+<span>Una carta para el amor de mi vida</span>
+</div>
+
+<div class="letter-box">
+
+<p class="letter-text">
+
+Amor, puede pasar el tiempo, cambiar los días y llegar nuevos momentos,
+pero jamás podría acostumbrarme a ti, a tu ternura, a tu sonrisa, a la tranquilidad que siento cuando estoy contigo,
+no me pidas que deje de amarte por que mi cuerpo y alma estan fabricados para eso.
+
+Gracias por existir y por construir esta historia conmigo.
+
+Te amo mi natica, te amo muchísimo.
+
+</p>
+
+<p class="letter-sign">
+Espero ser tuyo para siempre, Juan Gabriel 1121506366 jaja 🌹
+</p>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<section class="footer-section">
+
+<p class="footer-quote">
+"En un universo lleno de posibilidades, siempre te elegiría a ti."
+</p>
+
+<p class="footer-names">
+✦ Juan & Natalia ✦
+</p>
+
+</section>
+
+</div>
+
+<script>
+
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+function resize(){
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+}
+
+window.addEventListener('resize', resize);
+resize();
+
+class Particle{
+
+  constructor(){
+    this.reset();
+  }
+
+  reset(){
+    this.x = Math.random()*canvas.width;
+    this.y = Math.random()*canvas.height;
+    this.r = Math.random()*1.5+0.3;
+    this.vy = Math.random()*0.25+0.08;
+    this.vx = (Math.random()-0.5)*0.2;
+    this.a = Math.random()*0.4+0.08;
+  }
+
+  update(){
+    this.y -= this.vy;
+    this.x += this.vx;
+
+    if(this.y < -5){
+      this.reset();
+      this.y = canvas.height + 5;
+    }
+  }
+
+  draw(){
+    ctx.save();
+    ctx.globalAlpha = this.a;
+    ctx.fillStyle = '#c8536a';
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+}
+
+let particles = [];
+
+for(let i=0;i<90;i++){
+  particles.push(new Particle());
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p=>{
+    p.update();
+    p.draw();
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+
+/* CONTADOR */
+
+const START = new Date(2023,9,14);
+
+function tick(){
+
+  const d = Date.now()-START;
+
+  document.getElementById('c-days').textContent =
+    Math.floor(d/86400000);
+
+  document.getElementById('c-hours').textContent =
+    Math.floor((d/3600000)%24);
+
+  document.getElementById('c-mins').textContent =
+    Math.floor((d/60000)%60);
+
+  document.getElementById('c-secs').textContent =
+    Math.floor((d/1000)%60);
+
+}
+
+tick();
+setInterval(tick,1000);
+
+/* CORAZONES */
+
+function launchHearts(){
+
+  const em = ['❤️','🌹','💕','✨','💖','🌸'];
+
+  for(let i=0;i<25;i++){
+
+    setTimeout(()=>{
+
+      const el = document.createElement('div');
+
+      el.className = 'heart-rain';
+
+      el.textContent =
+        em[Math.floor(Math.random()*em.length)];
+
+      el.style.left = Math.random()*95+'vw';
+
+      el.style.fontSize =
+        (Math.random()*18+14)+'px';
+
+      el.style.setProperty(
+        '--drift',
+        (Math.random()*130-65)+'px'
+      );
+
+      el.style.setProperty(
+        '--rot',
+        (Math.random()*60-30)+'deg'
+      );
+
+      document.body.appendChild(el);
+
+      setTimeout(()=>{
+        el.remove();
+      },4000);
+
+    }, i*70);
+
+  }
+
+}
+
+</script>
+
+</body>
+</html>
+```
